@@ -35,5 +35,9 @@ dependencies {
 
     compile('org.apache.commons:commons-lang3:3.0')
 
+    compile('org.springframework.boot:spring-boot-starter-oauth2-client')
+
+    compile('org.springframework.session:spring-session-jdbc')//db세션
+
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
