@@ -61,13 +61,13 @@ public class PostsRepositoryTest {
             assertThat(posts.getAuthor()).isEqualTo(author[i]);
         }
     }
-
+/*
     @Test
     public void 게시글등록_수정()
     {
 
     }
-
+*/
     @Test
     public void BaseTimeEntity_등록()
     {

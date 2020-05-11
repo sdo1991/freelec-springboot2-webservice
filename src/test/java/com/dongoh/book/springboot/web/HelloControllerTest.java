@@ -1,9 +1,13 @@
 package com.dongoh.book.springboot.web;
 
+import com.dongoh.book.springboot.config.auth.SecurityConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -15,7 +19,10 @@ import static org.hamcrest.Matchers.is;
 @RunWith(SpringRunner.class)
 //테스트 진행 시 매개변수(SpringRunner) 스프링 실행자도 실행
 //스프링 부트 테스트와 JUnit 사이의 연결자 역할
-@WebMvcTest(controllers = HelloController.class)
+@WebMvcTest(controllers = HelloController.class,
+            excludeFilters = {
+                @ComponentScan.Filter(type= FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class)
+            })
 //WEB에 집중할 수 있는 어노테이션
 //@Controller, @ControllerAdvice 등 사용가능
 //@Service, @Component, @Repository 등은 사용 불가
@@ -28,6 +35,7 @@ public class HelloControllerTest {
     //스프링 MVC 테스트의 시작점
     //HTTP GET, POST 등의 api 테스트 가능
 
+    @WithMockUser(roles = "USER")
     @Test
     public void hello가_리턴된다() throws Exception{
         String hello="hello";
@@ -36,6 +44,7 @@ public class HelloControllerTest {
                 .andExpect(content().string(hello));//본문 내용 검증
     }
 
+    @WithMockUser(roles = "USER")
     @Test
     public void helloDto가_리턴된다() throws Exception{
         String name="hello";
